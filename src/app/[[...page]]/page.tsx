@@ -5,6 +5,8 @@ import { env } from "../../env.mjs";
 
 builder.init(env.NEXT_PUBLIC_BUILDERIO_API_KEY);
 
+export const revalidate = 2;
+
 interface PageProps {
   params: {
     page: string[];
