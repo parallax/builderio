@@ -13,7 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={"bg-white ring-1 ring-zinc-100"}>
+      <body className={"bg-gray-50"}>
         <div className="relative">
           <main>{children}</main>
         </div>

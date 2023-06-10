@@ -1,31 +1,34 @@
 "use client";
-// Import BuilderComponent and useIsPreviewing hooks from React
-// and DefaultErrorPage from Next
-import { builder } from "@builder.io/sdk";
-import { BuilderComponent, useIsPreviewing } from "@builder.io/react";
+
+import { Builder, BuilderComponent, useIsPreviewing } from "@builder.io/react";
+import dynamic from "next/dynamic";
 import DefaultErrorPage from "next/error";
-import { env } from "../env.mjs";
 
-// Replace with your Public API Key
-builder.init(env.NEXT_PUBLIC_BUILDERIO_API_KEY);
-
-// Define an interface for the BuilderPageProps object
-// with a `content` property type `any`
 interface BuilderPageProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   content: any;
 }
 
+Builder.registerComponent(
+  dynamic(() => import("./Header")),
+  {
+    name: "Header",
+    inputs: [
+      { name: "title", type: "text" },
+      { name: "logo", type: "file", allowedFileTypes: ["jpeg", "png"] },
+    ],
+    image:
+      "https://tabler-icons.io/static/tabler-icons/icons-png/3d-cube-sphere-off.png",
+  }
+);
+
 export function RenderBuilderContent({ content }: BuilderPageProps) {
-  // Call the useIsPreviewing hook to determine if
-  // the page is being previewed in Builder
   const isPreviewing = useIsPreviewing();
-  // If `content` has a value or the page is being previewed in Builder,
-  // render the BuilderComponent with the specified content and model props.
+
   if (content || isPreviewing) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     return <BuilderComponent content={content} model="page" />;
   }
-  // If the `content` is falsy and the page is
-  // not being previewed in Builder, render the
-  // DefaultErrorPage with a 404.
+
   return <DefaultErrorPage statusCode={404} />;
 }

@@ -13,6 +13,10 @@ const config = {
     scrollRestoration: true,
     appDir: true,
   },
+  images: {
+    dangerouslyAllowSVG: true,
+    domains: ["cdn.builder.io"],
+  },
 
   // i18n: {
   //   locales: ["en"],
